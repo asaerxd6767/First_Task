@@ -51,7 +51,7 @@ class ProductInfo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                '${product.price} EGP',
+                '${(product.price - ((product.price * product.discountPercentage) / 100)).toStringAsFixed(2)} EGP',
                 style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
@@ -59,16 +59,9 @@ class ProductInfo extends StatelessWidget {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                '${product.discountPercentage}% off',
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.red,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
+            Text(
+              '${product.price} EGP',
+              style: TextStyle(color: Colors.grey, decoration: .lineThrough),
             ),
           ],
         ),
@@ -82,7 +75,17 @@ class ProductInfo extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Stock: ${product.stock}'),
+              child: product.stock > 10
+                  ? Text('Stock: ${product.stock}')
+                  : Row(
+                      children: [
+                        Icon(Icons.warning, color: Colors.red,),
+                        Text(
+                          'Only ${product.stock} left',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ],
+                    ),
             ),
           ],
         ),

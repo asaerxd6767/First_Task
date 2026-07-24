@@ -14,7 +14,8 @@ class ProductCard extends StatefulWidget {
 
 class _ProductCardState extends State<ProductCard> {
   List<Product> products = [];
-  bool isLoading = true; // helped me alot (Also best practice with data to load), knowing if my screen really lagged or data isn't dataing...
+  bool isLoading =
+      true; // helped me alot (Also best practice with data to load), knowing if my screen really lagged or data isn't dataing...
 
   @override
   void initState() {
@@ -23,7 +24,7 @@ class _ProductCardState extends State<ProductCard> {
   }
 
   // Fetch products from the API and update the state
-  // understood the future<List<dynamic>> 
+  // understood the future<List<dynamic>>
   // and how to use it to fetch data from the API,
   // then convert it to a list of Product objects using the fromJson factory constructor.
   void loadProducts() async {
@@ -50,7 +51,9 @@ class _ProductCardState extends State<ProductCard> {
         break;
       case 'title':
       default:
-        sorted.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+        sorted.sort(
+          (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()),
+        );
         break;
     }
 
@@ -76,9 +79,40 @@ class _ProductCardState extends State<ProductCard> {
           child: Column(
             mainAxisAlignment: .center,
             children: [
-              Image.network(product.thumbnail, fit: BoxFit.cover),
-              ProductInfo(product: product), // Why I made this? so I can make it look like a listTile, and dont get confused later.
+              Container(
+                decoration: BoxDecoration(color: Colors.grey),
+                child: Stack(
+                  children: [
+                    Image.network(
+                      product.thumbnail,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
 
+                    Positioned(
+                      top: 10,
+                      left: 15,
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        child: Text(
+                          '-${product.discountPercentage}%',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ProductInfo(
+                product: product,
+              ), // Why I made this? so I can make it look like a listTile, and dont get confused later.
             ],
           ),
         );
